@@ -49,10 +49,21 @@ app.get('/dashboard', (req, res) => {
     const sheet = workbook.Sheets[sheetName];
     // Convert the Excel data to JSON
     const jsonData = xlsx.utils.sheet_to_json(sheet);
+    console.log(jsonData[0]);
+    // Convert date strings to ISO format in each row
+    const jsonWithISODate = jsonData.map((row) => {
+      const dateField = row['Day']; // Assuming 'Day' is the column name for the date field
+      if (dateField) {
+        const parsedDate = xlsx.SSF.parse_date_code(dateField);
+        const formattedDate = `${parsedDate.d.toString().padStart(2, '0')}-${parsedDate.m.toString().padStart(2, '0')}-${parsedDate.y}`;
+        row['Day'] = formattedDate; // Convert 'Day' to DD-MM-YYYY format
+      }
+      return row;
+    });
     // Prepare the response object
     const responseObject = {
-      count: jsonData.length,
-      data: jsonData,
+      count: jsonWithISODate.length,
+      data: jsonWithISODate,
     };
     res.json(responseObject);
   } catch (error) {
