@@ -16,8 +16,7 @@ const CustomBarChart: React.FC<BarChartProps> = ({ data, setDataKey }) => {
   const maxValue = Math.max(...data.map((item) => item.value));
   const yAxisDomain = [0, maxValue * 1.2];
   const handleClick = (bar: any) => {
-    const { name } = bar.payload; // Assuming 'name' is the property you want to extract
-    // Pass 'name' to your custom function
+    const { name } = bar.payload;
     setDataKey(name);
   };
   return (

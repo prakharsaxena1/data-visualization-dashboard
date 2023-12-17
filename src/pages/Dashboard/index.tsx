@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect } from 'react';
 import { Stack } from "@mui/material";
 import Filter from "./filter";
 import CustomBarChart from "../../components/Charts/BarChart";
@@ -40,8 +41,14 @@ const Dashboard = () => {
   const [searchParams] = useSearchParams();
 
   const [dataKey, setDataKey] = useState<string | null>(null);
+  const [lineData, setLineData] = useState<any>([]);
+
   const barData = convertToBarFormat(allData.data);
-  const lineData = convertToLineFormat(allData.data, { startDate: searchParams.get('startDate') ?? '', endDate: searchParams.get('endDate') ?? '' }, dataKey);
+  useEffect(() => {
+    if (dataKey) {
+      setLineData(convertToLineFormat(allData.data, { startDate: searchParams.get('startDate') ?? '', endDate: searchParams.get('endDate') ?? '' }, dataKey));
+    }
+  }, [dataKey, searchParams])
 
   return (
     <>
@@ -51,7 +58,7 @@ const Dashboard = () => {
       {/* Bar chart */}
       <CustomBarChart data={barData} setDataKey={setDataKey} />
       {/* Line chart */}
-      {dataKey && <CustomLineChart data={lineData} dataKey="A" />}
+      {dataKey && <CustomLineChart data={lineData} dataKey={dataKey} />}
     </>
   );
 };
