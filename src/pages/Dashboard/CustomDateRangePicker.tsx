@@ -56,7 +56,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onChange }) => {
         onClick={handleClick}
         value={
           startDate && endDate
-            ? `${startDate.format('DD-MM-YYYY')} - ${endDate.format('DD-MM-YYYY')}`
+            ? `${startDate.format('YYYY-MM-DD')} - ${endDate.format('YYYY-MM-DD')}`
             : ''
         }
         label="Select Date Range"
@@ -68,14 +68,14 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onChange }) => {
               type="date"
               fullWidth
               onChange={(e) => handleStartDateChange(e.target.value)}
-              value={startDate ? startDate.format('DD-MM-YYYY') : ''}
+              value={startDate ? startDate.format('YYYY-MM-DD') : ''}
               sx={{ mt: 1 }}
               />
             <TextField
               type="date"
               fullWidth
               onChange={(e) => handleEndDateChange(e.target.value)}
-              value={endDate ? endDate.format('DD-MM-YYYY') : ''}
+              value={endDate ? endDate.format('YYYY-MM-DD') : ''}
               sx={{ mt: 1 }}
             />
             <Box sx={{ mt: 2 }}>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
@@ -8,23 +9,26 @@ interface BarChartData {
 
 interface BarChartProps {
   data: BarChartData[];
+  setDataKey: (val: string) => void;
 }
 
-const CustomBarChart: React.FC<BarChartProps> = ({ data }) => {
-  const maxValue = Math.max(...data.map((item) => item.value)); // Find the maximum value in the data
-
-  // Add padding after the maximum value for the Y-axis domain
-  const yAxisDomain = [0, maxValue * 1.2]; // Adjust the multiplier (1.2 in this case) for the desired padding
-
+const CustomBarChart: React.FC<BarChartProps> = ({ data, setDataKey }) => {
+  const maxValue = Math.max(...data.map((item) => item.value));
+  const yAxisDomain = [0, maxValue * 1.2];
+  const handleClick = (bar: any) => {
+    const { name } = bar.payload; // Assuming 'name' is the property you want to extract
+    // Pass 'name' to your custom function
+    setDataKey(name);
+  };
   return (
     <ResponsiveContainer width="80%" height={400}>
       <BarChart data={data} layout="vertical">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis type="number" />
-        <YAxis dataKey="name" type="category" domain={yAxisDomain} /> {/* Apply the yAxisDomain to the YAxis */}
+        <YAxis dataKey="name" type="category" domain={yAxisDomain} />
         <Tooltip />
         <Legend />
-        <Bar dataKey="value" fill="#f1f277" />
+        <Bar dataKey="value" fill="#f1f277" onClick={handleClick} />
       </BarChart>
     </ResponsiveContainer>
   );
