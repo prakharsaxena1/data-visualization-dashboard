@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Typography,
@@ -10,13 +11,17 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    // Add your login logic here
+  const emailRef: any = useRef();
+  const passwordRef: any = useRef();
+  const handleSubmit = () => {
+    if (!passwordRef.current.value || !emailRef.current.value) {
+      return;
+    }
+    navigate('/');
   };
 
   return (
@@ -35,8 +40,9 @@ const LoginPage = () => {
         <Typography component="h1" variant="h5" sx={{ mt: 2 }}>
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box sx={{ mt: 3 }}>
           <TextField
+            inputRef={emailRef}
             margin="normal"
             required
             fullWidth
@@ -47,6 +53,7 @@ const LoginPage = () => {
             autoFocus
           />
           <TextField
+            inputRef={passwordRef}
             margin="normal"
             required
             fullWidth
@@ -61,7 +68,7 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={() => navigate('/')}
+            onClick={handleSubmit}
           >
             Sign In
           </Button>

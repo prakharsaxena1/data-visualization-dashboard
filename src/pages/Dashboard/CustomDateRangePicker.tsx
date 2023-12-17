@@ -66,6 +66,7 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({ onChange }) => {
           <Box sx={{ mt: 2, p: 2, bgcolor: 'background.paper' }} component={Paper}>
             <TextField
               type="date"
+              label="Start Date"
               fullWidth
               onChange={(e) => handleStartDateChange(e.target.value)}
               value={startDate ? startDate.format('YYYY-MM-DD') : ''}

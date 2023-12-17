@@ -20,7 +20,7 @@ const CustomBarChart: React.FC<BarChartProps> = ({ data, setDataKey }) => {
     setDataKey(name);
   };
   return (
-    <ResponsiveContainer width="80%" height={400}>
+    <ResponsiveContainer width="100%" height={400}>
       <BarChart data={data} layout="vertical">
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis type="number" />
