@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect } from 'react';
-import { Stack } from "@mui/material";
+import { useEffect } from "react";
+import { Stack, Box, Paper } from "@mui/material";
 import Filter from "./filter";
 import CustomBarChart from "../../components/Charts/BarChart";
 import CustomLineChart from "../../components/Charts/LineChart";
@@ -22,20 +22,26 @@ const convertToBarFormat = (data: any[]) => {
   const keys = Object.keys(count);
   keys.forEach((key) => {
     transformedData.push({ name: key, value: count[key] });
-  })
+  });
   return transformedData;
 };
 
-const convertToLineFormat = (data: any[], dateRange: { startDate: string, endDate: string } | null, dataKey: string | null) => {
+const convertToLineFormat = (
+  data: any[],
+  dateRange: { startDate: string; endDate: string } | null,
+  dataKey: string | null
+) => {
   if (dateRange && dataKey) {
-    const filteredData = data.filter((d) => d.Day >= dateRange.startDate && d.Day <= dateRange.endDate);
+    const filteredData = data.filter(
+      (d) => d.Day >= dateRange.startDate && d.Day <= dateRange.endDate
+    );
     return filteredData.map((d) => ({
-      name: d.Day, [dataKey]: d[dataKey]
+      name: d.Day,
+      [dataKey]: d[dataKey],
     }));
   }
   return [];
 };
-
 
 const Dashboard = () => {
   const [searchParams] = useSearchParams();
@@ -46,19 +52,36 @@ const Dashboard = () => {
   const barData = convertToBarFormat(allData.data);
   useEffect(() => {
     if (dataKey) {
-      setLineData(convertToLineFormat(allData.data, { startDate: searchParams.get('startDate') ?? '', endDate: searchParams.get('endDate') ?? '' }, dataKey));
+      setLineData(
+        convertToLineFormat(
+          allData.data,
+          {
+            startDate: searchParams.get("startDate") ?? "",
+            endDate: searchParams.get("endDate") ?? "",
+          },
+          dataKey
+        )
+      );
     }
-  }, [dataKey, searchParams])
+  }, [dataKey, searchParams]);
 
   return (
     <>
       <Stack sx={{ width: "fit-content", marginLeft: "auto" }}>
         <Filter />
       </Stack>
-      {/* Bar chart */}
-      <CustomBarChart data={barData} setDataKey={setDataKey} />
-      {/* Line chart */}
-      {dataKey && <CustomLineChart data={lineData} dataKey={dataKey} />}
+      <Stack sx={{ p: 2 }} spacing={2}>
+        {/* Bar chart */}
+        <Box sx={{ p: 2 }} component={Paper}>
+          <CustomBarChart data={barData} setDataKey={setDataKey} />
+        </Box>
+        {/* Line chart */}
+        {dataKey && (
+          <Box sx={{ p: 2 }} component={Paper}>
+            <CustomLineChart data={lineData} dataKey={dataKey} />
+          </Box>
+        )}
+      </Stack>
     </>
   );
 };

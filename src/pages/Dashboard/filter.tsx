@@ -58,7 +58,7 @@ const Filter = () => {
   return (
     <div>
       <React.Fragment>
-        <IconButton onClick={() => setDrawerOpen(true)}>
+        <IconButton onClick={() => setDrawerOpen(true)} sx={{ m: 1 }}>
           <FilterAltIcon />
         </IconButton>
         <SwipeableDrawer

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Box,
   Typography,
@@ -7,14 +8,19 @@ import {
   Grid,
   Stack,
 } from "@mui/material";
+import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
-    // Add registration logic here
+  const usernameRef: any = useRef();
+  const emailRef: any = useRef();
+  const passwordRef: any = useRef();
+  const handleSubmit = () => {
+    if (!passwordRef.current.value || !emailRef.current.value) {
+      return;
+    }
+    navigate('/');
   };
 
   return (
@@ -30,9 +36,10 @@ const RegisterPage = () => {
         <Typography component="h1" variant="h5">
           Create an account
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box sx={{ mt: 3 }}>
           <TextField
             margin="normal"
+            inputRef={usernameRef}
             required
             fullWidth
             id="name"
@@ -44,6 +51,7 @@ const RegisterPage = () => {
           <TextField
             margin="normal"
             required
+            inputRef={emailRef}
             fullWidth
             id="email"
             label="Email Address"
@@ -53,6 +61,7 @@ const RegisterPage = () => {
           <TextField
             margin="normal"
             required
+            inputRef={passwordRef}
             fullWidth
             name="password"
             label="Password"
@@ -61,11 +70,10 @@ const RegisterPage = () => {
             autoComplete="new-password"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={() => navigate('/')}
+            onClick={handleSubmit}
           >
             Register
           </Button>
