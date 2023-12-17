@@ -12,8 +12,10 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import { useAuth } from "../AuthContext/useAuth";
 
 const LoginPage = () => {
+  const { signIn } = useAuth();
   const navigate = useNavigate();
   const emailRef: any = useRef();
   const passwordRef: any = useRef();
@@ -21,6 +23,7 @@ const LoginPage = () => {
     if (!passwordRef.current.value || !emailRef.current.value) {
       return;
     }
+    signIn();
     navigate('/');
   };
 

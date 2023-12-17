@@ -39,7 +39,6 @@ const Filter = () => {
 
   const handleDateChange = (startDate: dayjs.Dayjs, endDate: dayjs.Dayjs) => {
     setDateRange({ startDate: startDate.format("DD-MM-YYYY"), endDate: endDate.format("DD-MM-YYYY") })
-    console.log(dateRange);
   };
 
   const applyFilter = () => {

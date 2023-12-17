@@ -10,8 +10,10 @@ import {
 } from "@mui/material";
 import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext/useAuth";
 
 const RegisterPage = () => {
+  const { signIn } = useAuth();
   const navigate = useNavigate();
   const usernameRef: any = useRef();
   const emailRef: any = useRef();
@@ -20,6 +22,7 @@ const RegisterPage = () => {
     if (!passwordRef.current.value || !emailRef.current.value) {
       return;
     }
+    signIn();
     navigate('/');
   };
 

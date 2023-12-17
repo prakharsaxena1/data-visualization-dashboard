@@ -6,7 +6,8 @@ import CustomBarChart from "../../components/Charts/BarChart";
 import CustomLineChart from "../../components/Charts/LineChart";
 import { useState } from "react";
 import allData from "./../../assets/data.json";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useAuth } from "../AuthContext/useAuth";
 
 const convertToBarFormat = (data: any[]) => {
   const transformedData: any = [];
@@ -44,12 +45,21 @@ const convertToLineFormat = (
 };
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [searchParams] = useSearchParams();
 
   const [dataKey, setDataKey] = useState<string | null>(null);
   const [lineData, setLineData] = useState<any>([]);
 
   const barData = convertToBarFormat(allData.data);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+
   useEffect(() => {
     if (dataKey) {
       setLineData(

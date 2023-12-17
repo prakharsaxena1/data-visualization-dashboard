@@ -13,10 +13,11 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
 import photo from "./../../assets/default.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../pages/AuthContext/useAuth";
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const { signOut } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -153,7 +154,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={() => navigate('/login')}>
+              <MenuItem onClick={() => signOut()}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
