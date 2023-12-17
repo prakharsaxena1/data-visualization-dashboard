@@ -49,7 +49,6 @@ app.get('/dashboard', (req, res) => {
     const sheet = workbook.Sheets[sheetName];
     // Convert the Excel data to JSON
     const jsonData = xlsx.utils.sheet_to_json(sheet);
-    console.log(jsonData[0]);
     // Convert date strings to ISO format in each row
     const jsonWithISODate = jsonData.map((row) => {
       const dateField = row['Day']; // Assuming 'Day' is the column name for the date field
