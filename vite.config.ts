@@ -7,5 +7,9 @@ export default defineConfig({
   server: {
     port: 5000,
     open: true,
-  }
+  },
+  build: {
+    outDir: 'dist',
+  },
+  publicDir: 'assets'
 })
